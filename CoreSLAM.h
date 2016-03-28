@@ -5,7 +5,9 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+#ifndef TS_SCAN_SIZE
 #define TS_SCAN_SIZE 8192
+#endif
 #ifndef TS_MAP_SIZE
 #define TS_MAP_SIZE 1024
 #endif
