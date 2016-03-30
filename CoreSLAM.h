@@ -9,8 +9,13 @@
 #define TS_SCAN_SIZE 8192
 #endif
 #ifndef TS_MAP_SIZE
+#ifdef TS_DYNAMIC_MAP_SIZE
+#define TS_MAP_SIZE map->size
+#else
 #define TS_MAP_SIZE 1024
 #endif
+#endif
+
 //#define TS_MAP_SCALE 0.02
 #define TS_NO_OBSTACLE 65500
 #define TS_OBSTACLE 0
@@ -19,9 +24,16 @@ extern float TS_MAP_SCALE;
 
 typedef unsigned short ts_map_pixel_t;
 
+#ifdef TS_DYNAMIC_MAP_SIZE
+typedef struct {
+    ts_map_pixel_t *map;
+    int size;
+} ts_map_t;
+#else
 typedef struct {
     ts_map_pixel_t map[TS_MAP_SIZE * TS_MAP_SIZE];
 } ts_map_t;
+#endif
 
 typedef struct {
     float x[TS_SCAN_SIZE], y[TS_SCAN_SIZE];

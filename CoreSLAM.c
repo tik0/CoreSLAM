@@ -6,6 +6,7 @@
 
 float TS_MAP_SCALE;
 
+#ifndef TS_DYNAMIC_MAP_SIZE
 void 
 ts_map_init(ts_map_t *map)
 {
@@ -18,6 +19,24 @@ ts_map_init(ts_map_t *map)
 	}
     }
 }
+#else
+void
+ts_map_init(ts_map_t *map, int size)
+{
+    // initalize map array
+    map->size = size;
+    map->map = malloc(sizeof(ts_map_pixel_t) * map->size * map->size);
+
+    int x, y, initval;
+    ts_map_pixel_t *ptr;
+    initval = (TS_OBSTACLE + TS_NO_OBSTACLE) / 2;
+    for (ptr = map->map, y = 0; y < TS_MAP_SIZE; y++) {
+      for (x = 0; x < TS_MAP_SIZE; x++, ptr++) {
+        *ptr = initval;
+    }
+    }
+}
+#endif
 
 void 
 ts_map_set_scale(float scale){
