@@ -8,6 +8,7 @@
 #ifndef TS_SCAN_SIZE
 #define TS_SCAN_SIZE 8192
 #endif
+
 #ifndef TS_MAP_SIZE
 #ifdef TS_DYNAMIC_MAP_SIZE
 #define TS_MAP_SIZE map->size
@@ -25,6 +26,9 @@ extern float TS_MAP_SCALE;
 typedef unsigned short ts_map_pixel_t;
 
 #ifdef TS_DYNAMIC_MAP_SIZE
+
+#define TS_MAP_SIZE map->size
+
 typedef struct {
     ts_map_pixel_t *map;
     int size;
@@ -54,7 +58,11 @@ typedef struct {
     int d[TS_SCAN_SIZE];
 } ts_sensor_data_t;
 
+#if TS_DYNAMIC_MAP_SIZE
+void ts_map_init(ts_map_t *map, int size);
+#else
 void ts_map_init(ts_map_t *map);
+#endif
 void ts_map_set_scale(float scale);
 int ts_distance_scan_to_map(ts_scan_t *scan, ts_map_t *map, ts_position_t *pos);
 void ts_map_update(ts_scan_t *scan, ts_map_t *map, ts_position_t *position, int quality, int hole_width);
