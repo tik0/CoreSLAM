@@ -122,6 +122,12 @@ ts_map_laser_ray(ts_map_t *map, int x1, int y1, int x2, int y2,
     horiz = 2 * dyc;
     diago = 2 * (dyc - dxc);
     errorv = derrorv / 2;
+
+    // HOTFIX: prevent division by zero, needs further investigation what a proper solution is
+    if (derrorv == 0) {
+        return;
+    }
+
     incv = (value - TS_NO_OBSTACLE) / derrorv;
     incerrorv = value - TS_NO_OBSTACLE - derrorv * incv;  
     ptr = map->map + y1 * TS_MAP_SIZE + x1;
